@@ -1,0 +1,2 @@
+# GalaxyCoin.finance
+Galaxycoin.finance
