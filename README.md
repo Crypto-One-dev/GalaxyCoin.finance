@@ -1,3 +1,6 @@
+GalaxyCoin.sol => Galaxy Coin Contract
+GalaxyLottery.sol => Galaxy Coin Lottery Contract
+
 # Install
 `npm install`
 
