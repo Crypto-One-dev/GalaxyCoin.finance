@@ -115,7 +115,7 @@ contract GALAXYCOIN is IERC20, Ownable{
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
-        require(_allowances[sender][msg.sender] >= amount, "In Sufficient allowance");
+        require(_allowances[sender][msg.sender] >= amount, "Insufficient allowance");
         
         uint256 tokensToAdmin1 = find1Percent(amount, adminFeePercent);
         uint256 tokensToLiquidity = find1Percent(amount, liquidityFeePercent);
@@ -141,7 +141,7 @@ contract GALAXYCOIN is IERC20, Ownable{
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
         require(sender != recipient,"cannot send money to your Self");
-        require(_balances[sender]>=amount,"In Sufficiebt Funds");
+        require(_balances[sender]>=amount,"Insufficient Funds");
         
         uint256 senderBalance = _balances[sender];
         require(senderBalance >= amount, "ERC20: transfer amount exceeds balance");
@@ -156,7 +156,7 @@ contract GALAXYCOIN is IERC20, Ownable{
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
         require(owner != spender,"cannot send allowances to yourself");
-        require(_balances[owner]>=amount,"In Sufficiebt Funds");
+        require(_balances[owner]>=amount,"Insufficient Funds");
     
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
