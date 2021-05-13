@@ -1,8 +1,11 @@
+<<<<<<< HEAD
+=======
 GalaxyCoin.sol => Galaxy Coin Contract
 
 
 GalaxyLottery.sol => Galaxy Coin Lottery Contract
 
+>>>>>>> 97990d424d4520efc550f87b19be62a4ac54aded
 # Install
 `npm install`
 

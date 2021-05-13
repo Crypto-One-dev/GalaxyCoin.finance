@@ -64,9 +64,8 @@ contract GALAXYCOIN is IERC20, Ownable{
         _liquidityTransfer = _liquidityTransfer;
         
         // Define admin and liquidity fee in percent
-        adminFeePercent = _adminFeePercent * 100; // convert into admin fee percent 
-        liquidityFeePercent = _liquidityFeePercent * 100; // conver into liquidity fee percen
-   
+        adminFeePercent = _adminFeePercent; // convert into admin fee percent 
+        liquidityFeePercent = _liquidityFeePercent;
         //transfer total supply to owner
         _balances[_msgSender()] = _totalSupply;
         emit Transfer(address(this), _msgSender(),  _totalSupply);
@@ -116,7 +115,7 @@ contract GALAXYCOIN is IERC20, Ownable{
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
-        require(_allowances[sender][msg.sender]>=amount,"In Sufficient allowance");
+        require(_allowances[sender][msg.sender] >= amount, "In Sufficient allowance");
         
         uint256 tokensToAdmin1 = find1Percent(amount, adminFeePercent);
         uint256 tokensToLiquidity = find1Percent(amount, liquidityFeePercent);
@@ -144,6 +143,11 @@ contract GALAXYCOIN is IERC20, Ownable{
         require(sender != recipient,"cannot send money to your Self");
         require(_balances[sender]>=amount,"In Sufficiebt Funds");
         
+        uint256 senderBalance = _balances[sender];
+        require(senderBalance >= amount, "ERC20: transfer amount exceeds balance");
+        _balances[sender] = senderBalance - amount;
+        _balances[recipient] += amount;
+        
         emit Transfer(sender, recipient, amount);
     }
      
@@ -167,7 +171,7 @@ contract GALAXYCOIN is IERC20, Ownable{
 
     // function to update LiquidityTransfer
     function UpdateLiquidityTransfer(address liquidityTransfer) external onlyAdmin {
-            _liquidityTransfer = liquidityTransfer;
+        _liquidityTransfer = liquidityTransfer;
     }
 
     receive()

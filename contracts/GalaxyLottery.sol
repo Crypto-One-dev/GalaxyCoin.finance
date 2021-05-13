@@ -8,7 +8,6 @@ import "./SafeMath.sol";
 import "./Oracle.sol";
 import "./ReentrancyGuard.sol";
 
-
 contract GalaxyLottery is ReentrancyGuard {
     using SafeMath for uint;
     using SafeERC20 for IERC20;
@@ -40,13 +39,11 @@ contract GalaxyLottery is ReentrancyGuard {
         address winner3;
     }
     
-    
     // modifiers
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin is allowed");
         _;
     }
-    
     
     // events
     event CreateLotteryEvent(uint indexed _lotteryId,  uint _timestamp);
@@ -190,12 +187,12 @@ contract GalaxyLottery is ReentrancyGuard {
     function getBalance() external view onlyAdmin returns(uint){
         return IERC20(tokenContract).balanceOf(address(this));
     }
-
+    
     // function for get Total sold tickets 
     function getTotalSoldTicket() view public returns(uint){
 
         uint totalTickets;
-        for(uint i =0; i < lotteryList.length; i++){
+        for(uint i = 0; i < lotteryList.length; i++){
             totalTickets = totalTickets.add(lotteryUsers[lotteryList[i].lotteryId].length);
         }
         return totalTickets;
